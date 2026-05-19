@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "auralis-ml"
+version = "0.1.0"
+description = "Real-time stream vibe engine driven by live chat NLP and FFmpeg audio modulation."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Auralis ML Contributors" }]
+keywords = ["machine-learning", "nlp", "audio", "ffmpeg", "fastapi", "mlops", "streaming"]
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.30.0",
+    "pydantic>=2.8.0",
+    "pydantic-settings>=2.4.0",
+    "redis>=5.0.0",
+    "numpy>=1.26.0",
+]
+
+[project.optional-dependencies]
+audio = ["librosa>=0.10.2", "soundfile>=0.12.1"]
+chat = ["pytchat>=0.5.5", "websockets>=12.0"]
+ml = ["transformers>=4.44.0", "torch>=2.3.0", "demucs>=4.0.1"]
+dev = ["pytest>=8.3.0", "ruff>=0.6.0", "httpx>=0.27.0"]
+
+[project.scripts]
+auralis-api = "auralis_ml.api.app:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
